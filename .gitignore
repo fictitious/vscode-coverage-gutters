@@ -1,5 +1,7 @@
 out
+dist
 node_modules
+vscode-coverage-gutters-*.vsix
 .vscode-test
 .cache
 coverage

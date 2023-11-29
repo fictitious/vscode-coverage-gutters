@@ -13,3 +13,7 @@ example/**
 .vscodeignore
 types/**
 promo_images/**
+.husky
+@types
+notes.md
+vite.config.js

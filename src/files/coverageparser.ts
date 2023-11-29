@@ -1,5 +1,4 @@
 import {parseContent as parseContentClover} from "@cvrg-report/clover-json";
-import {parseContent as parseContentCobertura} from "cobertura-parse";
 import {parseContent as parseContentJacoco} from "@7sean68/jacoco-parse";
 import {Section, source} from "lcov-parse";
 import {OutputChannel} from "vscode";
@@ -37,9 +36,9 @@ export class CoverageParser {
                     coverage = await this.xmlExtractJacoco(fileName, fileContent);
                     break;
                 case CoverageType.COBERTURA:
-                    coverage = await this.xmlExtractCobertura(fileName, fileContent);
-                    break;
-                case CoverageType.LCOV:
+                    throw new Error('unimplemented');
+
+                    case CoverageType.LCOV:
                     coverage = await this.lcovExtract(fileName, fileContent);
                     break;
                 default:
@@ -67,28 +66,6 @@ export class CoverageParser {
         return sections;
     }
 
-    private xmlExtractCobertura(filename: string, xmlFile: string) {
-        return new Promise<Map<string, Section>>((resolve) => {
-            const checkError = (err: Error) => {
-                if (err) {
-                    err.message = `filename: ${filename} ${err.message}`;
-                    this.handleError("cobertura-parse", err);
-                    return resolve(new Map<string, Section>());
-                }
-            };
-
-            try {
-                parseContentCobertura(xmlFile, async (err, data) => {
-                    checkError(err);
-                    const sections = await this.convertSectionsToMap(data);
-                    return resolve(sections);
-                }, true);
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } catch (error: any) {
-                checkError(error);
-            }
-        });
-    }
 
     private xmlExtractJacoco(filename: string, xmlFile: string) {
         return new Promise<Map<string, Section>>((resolve) => {

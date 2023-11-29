@@ -30,7 +30,7 @@
     "xml",
     "multi-root ready"
   ],
-  "main": "./out/src/extension",
+  "main": "./dist/vscode-coverage-gutters.js",
   "contributes": {
     "configuration": {
       "title": "coverage-gutters",
@@ -277,11 +277,11 @@
     "test-unit-headless": "xvfb-run -a npm run test-unit",
     "test-integration": "cross-env MOCHA_GREP=@integration npm test --silent",
     "test-integration-headless": "xvfb-run -a npm run test-integration",
-    "vscode:prepublish": "tsc -p ./",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "build": "npm install && npm run lint && npm run compile",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "package": "run -T vite build && vsce package --pre-release --no-dependencies"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
@@ -301,6 +301,7 @@
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "@vscode/test-electron": "2.3.3",
+    "@vscode/vsce": "^2.22.0",
     "chai": "4.3.6",
     "cross-env": "7.0.3",
     "eslint": "^8.14.0",
@@ -314,7 +315,6 @@
   "dependencies": {
     "@7sean68/jacoco-parse": "2.2.0",
     "@cvrg-report/clover-json": "0.3.2",
-    "cobertura-parse": "fschwaiger/cobertura-parse#82b0333cb1580f6f337b5d44b04e2f5ca8711b7e",
     "glob": "7.2.0",
     "lcov-parse": "1.0.0",
     "tslib": "^2.4.0",
