@@ -1,7 +1,7 @@
 import {parseContent as parseContentClover} from "@cvrg-report/clover-json";
 import {parseContent as parseContentJacoco} from "@7sean68/jacoco-parse";
 import {Section, source} from "lcov-parse";
-import {OutputChannel} from "vscode";
+import {OutputChannel, window} from "vscode";
 
 import {CoverageFile, CoverageType} from "./coveragefile";
 
@@ -36,9 +36,10 @@ export class CoverageParser {
                     coverage = await this.xmlExtractJacoco(fileName, fileContent);
                     break;
                 case CoverageType.COBERTURA:
-                    throw new Error('unimplemented');
+                    window.showWarningMessage("COBERTURA coverage parser: unimplemented");
+                    break;
 
-                    case CoverageType.LCOV:
+                case CoverageType.LCOV:
                     coverage = await this.lcovExtract(fileName, fileContent);
                     break;
                 default:
