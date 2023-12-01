@@ -1,0 +1,30 @@
+name: Continuous Integration
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  pull_request:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            test: test
+          - os: windows-latest
+            test: test
+          - os: ubuntu-latest
+            test: test-headless
+    runs-on: ${{ matrix.os }}
+    env:
+      CI: true
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 18
+    - run: npm ci
+    - run: npm run build
+    - run: npm run ${{ matrix.test }}
