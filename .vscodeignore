@@ -16,4 +16,4 @@ promo_images/**
 .husky
 @types
 notes.md
-vite.config.js
+vite.config.mjs

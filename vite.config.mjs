@@ -1,4 +1,4 @@
-import {defineConfig} from 'vite';
+import {defineConfig} from '@pakaf/dev-shared-configs/vite.common.config.js';
 
 export default defineConfig({
     build: {
@@ -8,7 +8,7 @@ export default defineConfig({
             formats: ['cjs']
         },
         rollupOptions: {
-            external: ['vscode', 'fs', 'path']
+            external: ['vscode', 'fs', 'path', 'events', 'assert', 'util', 'timers', 'stream', 'string_decoder']
         },
         minify: false
     }
